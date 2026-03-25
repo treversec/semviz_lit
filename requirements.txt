@@ -1,0 +1,10 @@
+streamlit
+numpy
+networkx
+tqdm
+pyvis
+scipy
+numba
+multiprocess
+dill
+llvmlite
