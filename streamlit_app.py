@@ -9,6 +9,19 @@ from semvecpy.vectors.vector_utils import cosine_similarity
 import os
 import tempfile
 
+st.markdown("""
+    <style>
+        .reportview-container {
+            margin-top: -2em;
+        }
+        #MainMenu {visibility: hidden;}
+        .stDeployButton {display:none;}
+        footer {visibility: hidden;}
+        #stDecoration {display:none;}
+    </style>
+""", unsafe_allow_html=True)
+
+
 # Helper function to get vector for a term
 def get_vector_for_term(vectors, term):
     """Get the vector for a specific term"""
