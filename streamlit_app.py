@@ -51,17 +51,6 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-    <style>
-        .reportview-container {
-            margin-top: -2em;
-        }
-        #MainMenu {visibility: hidden;}
-        .stDeployButton {display:none;}
-        footer {visibility: hidden;}
-        #stDecoration {display:none;}
-    </style>
-""", unsafe_allow_html=True)
 
 # Title and description
 st.title("📊 Pathfinder Network Visualization")
