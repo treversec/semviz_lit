@@ -161,7 +161,7 @@ class TqdmUpTo(tqdm):
         return self.update(b * bsize - self.n)
 
 # Load test data
-@st.cache_data
+@st.cache_resource(show_spinner="Loading data...") # The spinner text is optional
 def load_data_default():
     """Load the test vector files - default version"""
     import urllib.request
@@ -193,14 +193,14 @@ def load_data_default():
                 urllib.request.urlretrieve(zenodo_url, temp_path, reporthook=pbar.update_to)
 
             # Validate the downloaded file
-            is_valid, error_msg, info = validate_embedding_file(temp_path)
-            if not is_valid:
-                st.error(f"Downloaded file validation failed: {error_msg}")
-                os.remove(temp_path)
-                return None, None, None
+            #is_valid, error_msg, info = validate_embedding_file(temp_path)
+            #if not is_valid:
+            #    st.error(f"Downloaded file validation failed: {error_msg}")
+            #    os.remove(temp_path)
+            #    return None, None, None
 
             # Success - show info
-            st.success(f"Downloaded and validated: {info['num_words']:,} words, {info['vector_dim']} dimensions")
+            #st.success(f"Downloaded: {info['num_words']:,} words, {info['vector_dim']} dimensions")
 
             # Load and clean up
             embedding_vectors = readfile(temp_path)
@@ -212,7 +212,7 @@ def load_data_default():
             os.remove(temp_path)
         return None, None, None
 
-@st.cache_data
+@st.cache_resource(show_spinner="Loading data...") # The spinner text is optional
 def load_data_from_zenodo(selected_file):
     """Load the test vector files from a specific Zenodo file"""
     import urllib.request
@@ -230,14 +230,14 @@ def load_data_from_zenodo(selected_file):
             urllib.request.urlretrieve(download_url, temp_path, reporthook=pbar.update_to)
 
         # Validate the downloaded file
-        is_valid, error_msg, info = validate_embedding_file(temp_path)
-        if not is_valid:
-            st.error(f"Downloaded file validation failed: {error_msg}")
-            os.remove(temp_path)
-            return None, None, None
+        #is_valid, error_msg, info = validate_embedding_file(temp_path)
+        #if not is_valid:
+        #    st.error(f"Downloaded file validation failed: {error_msg}")
+        #    os.remove(temp_path)
+        #    return None, None, None
 
         # Success - show info
-        st.success(f"Downloaded and validated: {info['num_words']:,} words, {info['vector_dim']} dimensions")
+        #st.success(f"Downloaded: {info['num_words']:,} words, {info['vector_dim']} dimensions")
 
         # Load and clean up
         embedding_vectors = readfile(temp_path)
@@ -276,21 +276,24 @@ else:
 
 # Embedding source selection (must be before button for values to be available)
 st.sidebar.markdown("---")
-st.sidebar.subheader("Embedding Source")
-embedding_source = st.sidebar.radio(
-    "Select embedding source:",
-    options=["default", "zenodo"],
-    format_func=lambda x: "Default (sw_r5_basic)" if x == "default" else "Zenodo (select file)",
-    index=0
-)
+#st.sidebar.subheader("Embedding Source")
+#embedding_source = st.sidebar.radio(
+#    "Select embedding source:",
+#    options=["default", "zenodo"],
+#    format_func=lambda x: "Default (sw_r5_basic)" if x == "default" else "Zenodo (select file)",
+#    index=0
+#)
+embedding_source = "default"
 
-if embedding_source == "zenodo":
-    selected_file = st.sidebar.selectbox(
-        "Select Zenodo file:",
-        options=ZENODO_FILES,
-        format_func=get_file_label,
-        index=1  # Default to r5_basic (now at index 1)
-    )
+#if embedding_source == "zenodo":
+#    selected_file = st.sidebar.selectbox(
+#        "Select Zenodo file:",
+#        options=ZENODO_FILES,
+#        format_func=get_file_label,
+#        index=1  # Default to r5_basic (now at index 1)
+#    )
+
+selected_file = ZENODO_FILES[0]
 
 # Process button (at top of sidebar)
 if st.sidebar.button("Visualize Network"):
