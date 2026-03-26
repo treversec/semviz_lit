@@ -385,8 +385,8 @@ if st.sidebar.button("Visualize Network"):
 
     # Create the network visualization first
     if len(G.nodes()) > 0:
-        # Get positions for nodes using spring layout with wider spread
-        pos = nx.spring_layout(G, k=2, iterations=100, seed=42)
+        # Get positions for nodes using Kamada-Kawai layout
+        pos = nx.kamada_kawai_layout(G)
 
         # Dynamic canvas height based on number of nodes
         base_height = 400
